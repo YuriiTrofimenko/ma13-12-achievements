@@ -33,7 +33,6 @@ public class AchievementServlet extends HttpServlet {
 	
 	static {
 		
-		ObjectifyService.register(Achievement.class);
 	}
 
     /**
@@ -49,121 +48,130 @@ public class AchievementServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("application/json;charset=UTF-8");
-
-        Gson gson = new Gson();
-
-        String action = "";
-
-        if (request.getParameterMap().containsKey("action")) {
-
-            action = request.getParameter("action");
-        }
-
-        switch (action) {
-
-            case "signin": {
-
-                String loginString = "no login";
-                String passwordString = "no password";
-
-                if (request.getParameterMap().containsKey("login")
-                        && request.getParameterMap().containsKey("password")) {
-
-                    loginString = request.getParameter("login");
-                    passwordString = request.getParameter("password");
-                }
-
-                try (PrintWriter out = response.getWriter()) {
-                    /* TODO output your page here. You may use following sample code. */
-
-                    //Создали пустой список
-                    ArrayList<String> data = new ArrayList<>();
-                    //Добавили в него имя и пароль
-                    data.add(loginString);
-                    data.add(passwordString);
-                    //Предали список в объект Result
-                    Result result = new Result(data);
-                    //Превратили объект Result в json-строку
-                    //и отправили на клиент
-                    out.println(gson.toJson(result));
-                }
-                break;
-            }
-            case "create": {
-
-                if (request.getParameterMap().containsKey("title")
-                        && request.getParameterMap().containsKey("content")) {
-
-                	final String titleString = request.getParameter("title");
-                	final String contentString = request.getParameter("content");
-                    
-                    try (PrintWriter out = response.getWriter()) {
-                        
-                        //Global.achievements.add(achievement);
-                    	
-                    	String errorString = "";
-                    	
-                        ObjectifyService.run(new VoidWork() {
-                		    public void vrun() {
-                		    	//try {
-    								DAO.createAchievement(titleString, contentString);
-    							//} catch (Exception ex) {
-    								
-    								//out.print(gson.toJson(new Result(ex.getMessage())));
-    								//errorString = ex.getMessage();
-    							//}
-                		    }
-                		});
-
-                        ArrayList<String> data = new ArrayList<>();
-                        //Добавили в него имя и пароль
-                        data.add("created");
-                        //data.add(passwordString);
-                        //Предали список в объект Result
-                        Result result = new Result(data);
-                        //Превратили объект Result в json-строку
-                        //и отправили на клиент
-                        out.println(gson.toJson(result));
-                    }
-                }
-                break;
-            }
-            case "all-achievements": {
-
-                try (PrintWriter out = response.getWriter()) {
-                	
-                	try {
-                		
-                		List<Achievement> achievements = new ArrayList<>();
-                		
-                		ObjectifyService.run(new VoidWork() {
-                		    public void vrun() {
-                		    	//try {
-									DAO.getAllAchievements(achievements);
-								//} catch (Exception ex) {
-									
-									//out.print(gson.toJson(new Result("error")));
-								//}
-                		    }
-                		});
-                		//Предали список в объект Result
-                        //Result result = new Result(Global.achievements);
-                		Result result = new Result(achievements);
-                		//Превратили объект Result в json-строку
-                        //и отправили на клиент
-                        out.println(gson.toJson(result));
-                	} catch (Exception ex) {
-                		
-                        //out.print(gson.toJson(new Result(ex.getMessage())));
-                        out.print(gson.toJson(new Result("error")));
-                	}
-                	
-                    break;
-                }
-            }
-        }
+    	Gson gson = new Gson();
+    	try {
+	        //response.setContentType("text/html;charset=UTF-8");
+	        response.setContentType("application/json;charset=UTF-8");
+	
+	        
+	
+	        String action = "";
+	
+	        if (request.getParameterMap().containsKey("action")) {
+	
+	            action = request.getParameter("action");
+	        }
+	
+	        switch (action) {
+	
+	            case "signin": {
+	
+	                String loginString = "no login";
+	                String passwordString = "no password";
+	
+	                if (request.getParameterMap().containsKey("login")
+	                        && request.getParameterMap().containsKey("password")) {
+	
+	                    loginString = request.getParameter("login");
+	                    passwordString = request.getParameter("password");
+	                }
+	
+	                try (PrintWriter out = response.getWriter()) {
+	                    /* TODO output your page here. You may use following sample code. */
+	
+	                    //Создали пустой список
+	                    ArrayList<String> data = new ArrayList<>();
+	                    //Добавили в него имя и пароль
+	                    data.add(loginString);
+	                    data.add(passwordString);
+	                    //Предали список в объект Result
+	                    Result result = new Result(data);
+	                    //Превратили объект Result в json-строку
+	                    //и отправили на клиент
+	                    out.println(gson.toJson(result));
+	                }
+	                break;
+	            }
+	            case "create": {
+	
+	                if (request.getParameterMap().containsKey("title")
+	                        && request.getParameterMap().containsKey("content")) {
+	
+	                	final String titleString = request.getParameter("title");
+	                	final String contentString = request.getParameter("content");
+	                    
+	                    try (PrintWriter out = response.getWriter()) {
+	                        
+	                        //Global.achievements.add(achievement);
+	                    	
+	                    	String errorString = "";
+	                    	
+	                        ObjectifyService.run(new VoidWork() {
+	                		    public void vrun() {
+	                		    	//try {
+	    								DAO.createAchievement(titleString, contentString);
+	    							//} catch (Exception ex) {
+	    								
+	    								//out.print(gson.toJson(new Result(ex.getMessage())));
+	    								//errorString = ex.getMessage();
+	    							//}
+	                		    }
+	                		});
+	
+	                        ArrayList<String> data = new ArrayList<>();
+	                        //Добавили в него имя и пароль
+	                        data.add("created");
+	                        //data.add(passwordString);
+	                        //Предали список в объект Result
+	                        Result result = new Result(data);
+	                        //Превратили объект Result в json-строку
+	                        //и отправили на клиент
+	                        out.println(gson.toJson(result));
+	                    }
+	                }
+	                break;
+	            }
+	            case "all-achievements": {
+	
+	                try (PrintWriter out = response.getWriter()) {
+	                	
+	                	try {
+	                		
+	                		List<Achievement> achievements = new ArrayList<>();
+	                		
+	                		ObjectifyService.run(new VoidWork() {
+	                		    public void vrun() {
+	                		    	try {
+										DAO.getAllAchievements(achievements);
+									} catch (Exception ex) {
+										
+										out.print(gson.toJson(new Result(ex.getMessage())));
+									}
+	                		    }
+	                		});
+	                		//Предали список в объект Result
+	                        //Result result = new Result(Global.achievements);
+	                		Result result = new Result(achievements);
+	                		//Превратили объект Result в json-строку
+	                        //и отправили на клиент
+	                        out.println(gson.toJson(result));
+	                	} catch (Exception ex) {
+	                		
+	                        //out.print(gson.toJson(new Result(ex.getMessage())));
+	                        out.print(gson.toJson(new Result("error")));
+	                	}
+	                	
+	                    break;
+	                }
+	            }
+	        }
+    	} catch (Exception ex) {
+    		
+    		try (PrintWriter out = response.getWriter()) {
+    			//out.print(gson.toJson(new Result(ex.getMessage())));
+    			out.print(gson.toJson(new Result("big error")));
+    		}
+    	}
 
     }
 

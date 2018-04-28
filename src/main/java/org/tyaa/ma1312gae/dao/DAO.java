@@ -1,5 +1,6 @@
 package org.tyaa.ma1312gae.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.googlecode.objectify.*;
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -11,7 +12,10 @@ public class DAO {
 	//Получение всех  в виде списка
 	public static void getAllAchievements(List<Achievement> _emptyOrdersList) throws Exception {
 		
-		_emptyOrdersList.addAll(ofy().load().type(Achievement.class).list());
+		List<Achievement> achievements = new ArrayList<>();
+		if(achievements != null) {
+			_emptyOrdersList.addAll(ofy().load().type(Achievement.class).list());
+		}
 	}
 	
 	public static void createAchievement(String _title, String _content) {

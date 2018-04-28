@@ -1,6 +1,8 @@
 $(document).ready(function () {
     
     function populateTable(){
+    	//Добавляем на место таблицы полосу бесконечного прогресса - пока будет ожидаться ответ сервера
+    	$('div#achievements').html("<div class='progress'><div class='indeterminate'></div></div>");
         //url: "http://localhost:8080/WebApp1/FirstServlet?action=all-achievements",
         $.ajax({
             url: "/achievements?action=all-achievements",
@@ -54,7 +56,7 @@ $(document).ready(function () {
         
         //Получаем значения из полей ввода
         var title = $('input#title').val();
-        var content = $('input#content').val();
+        var content = $('textarea#content').val();
         
         //Отправка асинхронного запроса
         //url: "http://localhost:8080/WebApp1/FirstServlet?action=create"

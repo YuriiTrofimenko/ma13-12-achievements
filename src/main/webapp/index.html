@@ -17,20 +17,25 @@ and open the template in the editor.
 <body>
     <div class="container">
         <div class="row">
-            <div id="response-block-2" class="col s3">
+            <div id="response-block-2" class="col s4">
                 <h4>Add achievement:</h4>
-                <form>
-                    <label for="title">title:</label>
-                    <input type="text" name="title" id="title">
-                    <label for="content">content:</label>
-                    <input type="text" name="content" id="content">
-                    <!--input type="submit" name="submit" value="submit"-->
-                    <button id="submit-button2" class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                </form>
+                <div class="card">
+					<div class="card-content">
+		                <form>
+		                    <label for="title">title:</label>
+		                    <input type="text" name="title" id="title">
+		                    <label for="content">content:</label>
+		                    <!-- <input type="text" name="content" id="content"> -->
+		                    <textarea id="content" name="content" class="materialize-textarea validate" data-length="1000"></textarea>
+		                    <!--input type="submit" name="submit" value="submit"-->
+		                    <button id="submit-button2" class="btn waves-effect waves-light" type="submit" name="action">Submit
+		                        <i class="material-icons right">send</i>
+		                    </button>
+		                </form>
+                	</div>
+				</div>
             </div>
-            <div id="achievements" class="col s9"></div>
+            <div id="achievements" class="col s8"></div>
         </div>
     </div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
